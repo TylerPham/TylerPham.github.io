@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Tyler Pham</title>
+  <meta name="description" content="I'm a pretty cool guy, cool guys usually have websites. Wikipedia are not cool people.">
+
+<!--   <link rel="stylesheet" href="/_css/index.css">
+ -->  <!-- <script src="/_site/assets/main.js"></script> -->
+
+
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Your awesome title" href="/feed.xml">
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
+
+</head>
+
+<!-- ======================= -->
+
+<body>
+  <div class="name-card col-md-offset-1 container">
+    <!-- 
+      <div class="row">
+        <h1 class="col-xs-6">Tyler Pham: Adjective</h1>  
+      </div> -->
+    <h1>Tyler Pham
+      <span
+        class="txt-rotate"
+        data-period="2000"
+        data-rotate='[
+        "[student] 😁",
+        "[programmer]",
+        "[software developer]",
+        "[tinkerer]",
+        "[nerd]",
+        "[photographer]",
+        "[thrill seeker]",
+        "[dragon boater]",
+        "[slackliner]",
+        "[dancer]",
+        "[single fa"
+        ]'>
+      </span>
+    </h1>
+    <h4>Developer in development</h4>
+    <div class="row no-margin">
+      <a href="https://github.com/TylerPham" title="Github">
+      <i class="fa fa-github fa-2x fa-fw" aria-hidden="true"></i>
+      </a>
+      <a href="https://ca.linkedin.com/in/phamtyle"r title="Linkedin">
+      <i class="fa fa-linkedin fa-2x fa-fw" aria-hidden="true"></i>
+      </a>
+      <a href="phamtyler94@gmail.com" title="Email">
+      <i class="fa fa-envelope fa-2x fa-fw" aria-hidden="true"></i>
+      </a>
+      <a href="Tyler_Pham_Resume_2017.pdf" title="Resume">
+        <!-- <i class="fa fa-file-pdf-o fa-2x fa-fw"   aria-hidden="true"></i> -->
+        <i class="fa fa-file-pdf-o fa-2x fa-fw" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+  <div class="personal-blurb col-md-offset-6 col-xs-5">
+    <h3 class="align-center">Since I'm not famous enough for a wikipedia page...yet</h3>
+    <p>Heyo I'm Tyler. I'm a fourth year CS student studying at UofT. I love to hack, solve problems, and dabble with design. Since I was young I've always been tech inclined. To me technology is a field of endless possibilities for solving problems.</p>
+  </div>
+  <!-- <div class="background-image">
+    <img src="http://i61.tinypic.com/2nvuxso.jpg" class="img-responsive">
+    </div>
+     -->
+</body>
+
+<!-- 
+===============================
+CUSTOM CSS HERE
+TODO REFACTOR TO _CSS FOLDER
+=============================== 
+-->
+<style>
+
+/*prevents scrolling*/
+body {
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  font-family: "Open Sans", sans-serif !important;
+  color: #333333;
+}
+
+.background-image {
+  position:fixed;
+  bottom:0px;
+  padding-bottom: 0px;
+}
+.name-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 500px;
+}
+
+.no-margin{
+  padding-left: 10px;
+  padding-right: 0px;
+}
+
+.fa-github, .fa-linkedin, .fa-envelope, .fa-file-pdf-o{
+  color: black;
+}
+
+
+html { 
+  background: url(snow_landscape.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+</style>
+
+<!-- 
+===============================
+CUSTOM JAVASCRIPT HERE
+TODO REFACTOR TO _SCRIPTS FOLDER
+=============================== 
+-->
+
+<script>
+  var TxtRotate = function(el, toRotate, period) {
+    this.toRotate = toRotate;
+    this.el = el;
+    this.loopNum = 0;
+    this.period = parseInt(period, 10) || 2000;
+    this.txt = '';
+    this.tick();
+    this.isDeleting = false;
+  };
+
+  TxtRotate.prototype.tick = function() {
+    var i = this.loopNum % this.toRotate.length;
+    var fullTxt = this.toRotate[i];
+
+    if (this.isDeleting) {
+      this.txt = fullTxt.substring(0, this.txt.length - 1);
+    } else {
+      this.txt = fullTxt.substring(0, this.txt.length + 1);
+    }
+
+    this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+    var that = this;
+    var delta = 300 - Math.random() * 100;
+
+    if (this.isDeleting) { delta /= 2; }
+
+    if (!this.isDeleting && this.txt === fullTxt) {
+      delta = this.period;
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.txt === '') {
+      this.isDeleting = false;
+      this.loopNum++;
+      delta = 500;
+    }
+
+    setTimeout(function() {
+      that.tick();
+    }, delta);
+  };
+
+  window.onload = function() {
+    var elements = document.getElementsByClassName('txt-rotate');
+    for (var i=0; i<elements.length; i++) {
+      var toRotate = elements[i].getAttribute('data-rotate');
+      var period = elements[i].getAttribute('data-period');
+      if (toRotate) {
+        new TxtRotate(elements[i], JSON.parse(toRotate), period);
+      }
+    }
+    // INJECT CSS
+    // var css = document.createElement("style");
+    // css.type = "text/css";
+    // css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+    // document.body.appendChild(css);
+  };
+</script>
